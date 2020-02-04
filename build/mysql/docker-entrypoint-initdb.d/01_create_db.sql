@@ -1,0 +1,6 @@
+
+CREATE USER local IDENTIFIED BY 'local';
+CREATE DATABASE IF NOT EXISTS `db` COLLATE 'utf8_general_ci' ;
+GRANT ALL ON `db`.* TO 'local'@'%' ;
+
+FLUSH PRIVILEGES ;

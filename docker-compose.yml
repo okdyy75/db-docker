@@ -1,0 +1,35 @@
+version: '3'
+services:
+  # MySQL ################################################
+  mysql:
+    build: ./build/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: Asia/Tokyo
+    volumes:
+      - .data/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+  # Oracle ################################################
+  oracle:
+    build: ./build/oracle
+    environment:
+      ORACLE_SID: SID
+      ORACLE_PDB: PDB
+      ORACLE_PWD: SYS
+      ORACLE_CHARACTERSET: AL32UTF8
+      TZ: Asia/Tokyo
+    ports:
+      - 1521:1521
+    volumes:
+      - ./oradata:/opt/oracle/oradata
+# PostgreSQL ################################################
+  postgres:
+    build: ./build/postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      TZ: Asia/Tokyo
+    volumes:
+      - ./pgsql-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
