@@ -3,21 +3,22 @@
 
 ## 概要
 ユーザーは`local`、DBは`DB`として作成  
-文字コードはUTF-8、タイムゾーンはミドルウェアによるのでDockerより指定
+文字コードはUTF-8、タイムゾーンはミドルウェアによるのでDockerより指定  
 DBビルド時に「docker-entrypoint-initdb.d」に実行SQLを配置する
 
 ## 最低要件
 
 ### MacにDockerとDocker-composeをインストール
 
-公式からDockerをワンライナーでインストール
+公式からDockerをワンライナーでインストール  
 https://github.com/docker/docker-install
 
-公式からDocker Composeのインストール
+公式からDocker Composeのインストール  
+最新版をインストール  
 http://docs.docker.jp/compose/install.html
-最新版をインストール
 
-### My SQL
+
+## My SQL
 version 5.7
 
 sql-modeのデフォルトは下記の通り
@@ -25,29 +26,28 @@ sql-modeのデフォルトは下記の通り
 ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
 ```
 
-#### 接続手順
+### 接続手順
 ```
 dc exec mysql bash
 mysql> mysql -ulocal -plocal db
 
 ```
 
-### Oracle
+## Oracle
 version 19.3.0-ee
 
-こちらを参考にさせて頂きました
-
-DockerでOracle Databaseを使う
+こちらを参考にさせて頂きました  
+DockerでOracle Databaseを使う  
 https://qiita.com/gorilla0513/items/f22e8cce4e08da031abe
 
-#### Oracle DBのDockerイメージ作成
+### Oracle DBのDockerイメージ作成
 オラクルのコンテナを起動する前にDockerイメージを作成する。手順は下記の通り
 
-Oracleの公式Docker Image
-https://github.com/oracle/docker-images
+Oracleの公式Docker Image  
+https://github.com/oracle/docker-images  
 
-Oracle Databaseの公式Docker Image
-https://github.com/oracle/docker-images/blob/master/OracleDatabase/SingleInstance/README.md
+Oracle Databaseの公式Docker Image  
+https://github.com/oracle/docker-images/blob/master/OracleDatabase/SingleInstance/README.md  
 
 DokcerにOracle Databaseの公式イメージがないので、Oracleが用意したimageをローカルで作成する
 ```
@@ -72,7 +72,7 @@ sqlplus system/<your password>@//localhost:1521/<your SID>
 sqlplus pdbadmin/<your password>@//localhost:1521/<Your PDB name>
 ```
 
-#### 接続手順
+### 接続手順
 ```
 dc exec oracle bash
 oracle> sqlplus pdbadmin/SYS@//localhost:1521/PDB
@@ -85,19 +85,19 @@ MySQLで言うところのDBがOracleで言うユーザー（スキーマ）に�
 [【ORACLEのお勉強#01】テーブル、表領域、データファイル、ディスクの関係](https://el.jibun.atmarkit.co.jp/yuu1/2017/08/oracle_oracle_redoundo_oracle_10oracle.html)  
 - Oracleの権限についてはオブジェクト権限、システム権限があり、システム権限が与えられないとユーザーを作成してもテーブル作成できない。ひとまず定義済みDBAロールを付与。
 
-### PostgreSQL
+## PostgreSQL
 version 12.1
 
 ロケールはDB作成時にしか設定できないので、Dockerfile起動時に設定
 
-#### 接続手順
+### 接続手順
 ```
 dc exec postgres bash
 postgres> psql -U local -d db
 
 ```
 
-### Dockerコンテナ起動
+## Dockerコンテナ起動
 ```
 dc down
 dc build --no-cache
